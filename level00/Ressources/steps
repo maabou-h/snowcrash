@@ -1,0 +1,13 @@
+# once logged as level00, 
+# we need to 'FIND this first file who can run only as flag00', 
+# as seen in the video's README
+< level00@SnowCrash:~$ find / -user flag00 2>/dev/null
+> /usr/sbin/john
+> /rofs/usr/sbin/john
+< level00@SnowCrash:~$ cat /usr/sbin/john
+> cdiiddwpgswtgt
+# password doesnt work, lets try a rot
+# rot15 of this password outputs 'nottoohardhere'
+# now we log in successfully and launch getflag
+< flag00@SnowCrash:~$ getflag
+> Check flag.Here is your token : x24ti5gi3x0ol2eh4esiuxias
