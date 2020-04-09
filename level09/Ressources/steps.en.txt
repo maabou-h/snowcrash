@@ -1,10 +1,16 @@
 level09@SnowCrash:~$ cat token
-f4kmm6p|=ï¿½pï¿½nï¿½ï¿½DBï¿½Du{ï¿½ï¿½½
+>f4kmm6p|=ï¿½pï¿½nï¿½ï¿½DBï¿½Du{ï¿½ï¿½½
 
 level09@SnowCrash:~$ ./level09 token 
-tpmhr
+>tpmhr
 
 level09@SnowCrash:~$ ./level09 aaaa
-abcd
+>abcd
 
-The program level09, take the the index of the of each char contain in the string and add it to is ascii value.
+The program level09, take the the index of the of each char who is contain in a given string and add is idx to his ascii value.
+
+./a.out `cat token`
+>f3iji1ju5yuevaus41q1afiuq
+
+su flag09 -c "getflag"
+>s5cAJpM8ev6XHw998pRWG728z

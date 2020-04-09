@@ -3,9 +3,14 @@
 
 int main (int argc, char **argv)
 {
-  int i = 0;
+  if (argc != 2)
+    return (-1);
 
-  while (++i < 25)
+  int i = 0;
+  while (i < 25)
+  {
     printf ("%c", argv[1][i] - i);
+    i++;
+  }
   return (0);
 }
