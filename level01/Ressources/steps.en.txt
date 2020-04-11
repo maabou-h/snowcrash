@@ -20,6 +20,7 @@
 > passwd
 # we now have the passwd file containing info about flag01's password
 # so we will crack the password using john on our local machine
+# on the evaluation xubuntu vm, the password will only show if you don't use the --show option !!!
 < foo@DESKTOP-SN4HJPM:~/snowcrash/level01$ john --show passwd
 > flag01:abcdefg:3001:3001::/home/flag/flag01:/bin/bash
 > 
